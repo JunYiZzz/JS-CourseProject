@@ -32,23 +32,23 @@ function Level(plan) {
     this.grid.push(gridLine);
   }
 
-  this.player = this.actors.filter(function(actor) {
+  this.player = this.actors.filter(function (actor) {
     return actor.type == "player";
   })[0];
   this.status = this.finishDelay = null;
 }
 
-Level.prototype.isFinished = function() {
+Level.prototype.isFinished = function () {
   return this.status != null && this.finishDelay < 0;
 };
 
 function Vector(x, y) {
   this.x = x; this.y = y;
 }
-Vector.prototype.plus = function(other) {
+Vector.prototype.plus = function (other) {
   return new Vector(this.x + other.x, this.y + other.y);
 };
-Vector.prototype.times = function(factor) {
+Vector.prototype.times = function (factor) {
   return new Vector(this.x * factor, this.y * factor);
 };
 
@@ -105,24 +105,24 @@ function DOMDisplay(parent, level) {
 
 var scale = 20;
 
-DOMDisplay.prototype.drawBackground = function() {
+DOMDisplay.prototype.drawBackground = function () {
   var table = elt("table", "background");
   table.style.width = this.level.width * scale + "px";
-  this.level.grid.forEach(function(row) {
+  this.level.grid.forEach(function (row) {
     var rowElt = table.appendChild(elt("tr"));
     rowElt.style.height = scale + "px";
-    row.forEach(function(type) {
+    row.forEach(function (type) {
       rowElt.appendChild(elt("td", type));
     });
   });
   return table;
 };
 
-DOMDisplay.prototype.drawActors = function() {
+DOMDisplay.prototype.drawActors = function () {
   var wrap = elt("div");
-  this.level.actors.forEach(function(actor) {
+  this.level.actors.forEach(function (actor) {
     var rect = wrap.appendChild(elt("div",
-                                    "actor " + actor.type));
+      "actor " + actor.type));
     rect.style.width = actor.size.x * scale + "px";
     rect.style.height = actor.size.y * scale + "px";
     rect.style.left = actor.pos.x * scale + "px";
@@ -131,7 +131,7 @@ DOMDisplay.prototype.drawActors = function() {
   return wrap;
 };
 
-DOMDisplay.prototype.drawFrame = function() {
+DOMDisplay.prototype.drawFrame = function () {
   if (this.actorLayer)
     this.wrap.removeChild(this.actorLayer);
   this.actorLayer = this.wrap.appendChild(this.drawActors());
@@ -139,7 +139,7 @@ DOMDisplay.prototype.drawFrame = function() {
   this.scrollPlayerIntoView();
 };
 
-DOMDisplay.prototype.scrollPlayerIntoView = function() {
+DOMDisplay.prototype.scrollPlayerIntoView = function () {
   var width = this.wrap.clientWidth;
   var height = this.wrap.clientHeight;
   var margin = width / 3;
@@ -150,7 +150,7 @@ DOMDisplay.prototype.scrollPlayerIntoView = function() {
 
   var player = this.level.player;
   var center = player.pos.plus(player.size.times(0.5))
-                 .times(scale);
+    .times(scale);
 
   if (center.x < left + margin)
     this.wrap.scrollLeft = center.x - margin;
@@ -162,11 +162,11 @@ DOMDisplay.prototype.scrollPlayerIntoView = function() {
     this.wrap.scrollTop = center.y + margin - height;
 };
 
-DOMDisplay.prototype.clear = function() {
+DOMDisplay.prototype.clear = function () {
   this.wrap.parentNode.removeChild(this.wrap);
 };
 
-Level.prototype.obstacleAt = function(pos, size) {
+Level.prototype.obstacleAt = function (pos, size) {
   var xStart = Math.floor(pos.x);
   var xEnd = Math.ceil(pos.x + size.x);
   var yStart = Math.floor(pos.y);
@@ -184,34 +184,34 @@ Level.prototype.obstacleAt = function(pos, size) {
   }
 };
 
-Level.prototype.actorAt = function(actor) {
+Level.prototype.actorAt = function (actor) {
   for (var i = 0; i < this.actors.length; i++) {
     var other = this.actors[i];
     if (other != actor &&
-        actor.pos.x + actor.size.x > other.pos.x &&
-        actor.pos.x < other.pos.x + other.size.x &&
-        actor.pos.y + actor.size.y > other.pos.y &&
-        actor.pos.y < other.pos.y + other.size.y)
+      actor.pos.x + actor.size.x > other.pos.x &&
+      actor.pos.x < other.pos.x + other.size.x &&
+      actor.pos.y + actor.size.y > other.pos.y &&
+      actor.pos.y < other.pos.y + other.size.y)
       return other;
   }
 };
 
 var maxStep = 0.05;
 
-Level.prototype.animate = function(step, keys) {
+Level.prototype.animate = function (step, keys) {
   if (this.status != null)
     this.finishDelay -= step;
 
   while (step > 0) {
     var thisStep = Math.min(step, maxStep);
-    this.actors.forEach(function(actor) {
+    this.actors.forEach(function (actor) {
       actor.act(thisStep, this, keys);
     }, this);
     step -= thisStep;
   }
 };
 
-Lava.prototype.act = function(step, level) {
+Lava.prototype.act = function (step, level) {
   var newPos = this.pos.plus(this.speed.times(step));
   if (!level.obstacleAt(newPos, this.size))
     this.pos = newPos;
@@ -223,7 +223,7 @@ Lava.prototype.act = function(step, level) {
 
 var wobbleSpeed = 8, wobbleDist = 0.07;
 
-Coin.prototype.act = function(step) {
+Coin.prototype.act = function (step) {
   this.wobble += step * wobbleSpeed;
   var wobblePos = Math.sin(this.wobble) * wobbleDist;
   this.pos = this.basePos.plus(new Vector(0, wobblePos));
@@ -231,7 +231,7 @@ Coin.prototype.act = function(step) {
 
 var playerXSpeed = 7;
 
-Player.prototype.moveX = function(step, level, keys) {
+Player.prototype.moveX = function (step, level, keys) {
   this.speed.x = 0;
   if (keys.left) this.speed.x -= playerXSpeed;
   if (keys.right) this.speed.x += playerXSpeed;
@@ -248,7 +248,7 @@ Player.prototype.moveX = function(step, level, keys) {
 var gravity = 30;
 var jumpSpeed = 17;
 
-Player.prototype.moveY = function(step, level, keys) {
+Player.prototype.moveY = function (step, level, keys) {
   this.speed.y += step * gravity;
   var motion = new Vector(0, this.speed.y * step);
   var newPos = this.pos.plus(motion);
@@ -264,7 +264,7 @@ Player.prototype.moveY = function(step, level, keys) {
   }
 };
 
-Player.prototype.act = function(step, level, keys) {
+Player.prototype.act = function (step, level, keys) {
   this.moveX(step, level, keys);
   this.moveY(step, level, keys);
 
@@ -279,15 +279,15 @@ Player.prototype.act = function(step, level, keys) {
   }
 };
 
-Level.prototype.playerTouched = function(type, actor) {
+Level.prototype.playerTouched = function (type, actor) {
   if (type == "lava" && this.status == null) {
     this.status = "lost";
     this.finishDelay = 1;
   } else if (type == "coin") {
-    this.actors = this.actors.filter(function(other) {
+    this.actors = this.actors.filter(function (other) {
       return other != actor;
     });
-    if (!this.actors.some(function(actor) {
+    if (!this.actors.some(function (actor) {
       return actor.type == "coin";
     })) {
       this.status = "won";
@@ -296,7 +296,7 @@ Level.prototype.playerTouched = function(type, actor) {
   }
 };
 
-var arrowCodes = {37: "left", 38: "up", 39: "right"};
+var arrowCodes = { 37: "left", 38: "up", 39: "right" };
 
 function trackKeys(codes) {
   var pressed = Object.create(null);
@@ -331,7 +331,7 @@ var arrows = trackKeys(arrowCodes);
 
 function runLevel(level, Display, andThen) {
   var display = new Display(document.body, level);
-  runAnimation(function(step) {
+  runAnimation(function (step) {
     level.animate(step, arrows);
     display.drawFrame(step);
     if (level.isFinished()) {
@@ -345,7 +345,7 @@ function runLevel(level, Display, andThen) {
 
 function runGame(plans, Display) {
   function startLevel(n) {
-    runLevel(new Level(plans[n]), Display, function(status) {
+    runLevel(new Level(plans[n]), Display, function (status) {
       if (status == "lost")
         startLevel(n);
       else if (n < plans.length - 1)
