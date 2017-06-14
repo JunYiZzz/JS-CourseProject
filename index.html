@@ -7,14 +7,14 @@
 
 <link rel="stylesheet" href="css/game.css" />
 <script type="text/javascript">
-window.onload=function()
-		{
-var a=sessionStorage.getItem("aduser");
-document.getElementById("username").innerHTML(a);
-    }
+
+function getStorage(){
+var a=sessionStorage.getItem("username");
+ document.getElementById("username").innerHTML=a;
+}
 </script>
 </head>
-<body>
+<body onload="getStorage()">
   <div id="div1">
   <script>
     // To know when to stop and restart the animation, a level that is
