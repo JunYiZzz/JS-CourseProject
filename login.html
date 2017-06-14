@@ -15,12 +15,25 @@
 
 	<script>
 
-		  function saveStorage(){  
-        var name = document.getElementById("username").value;  
-        sessionStorage.setItem("username",name);  
-        var password = document.getElementById("password").value;  
-        sessionStorage.setItem("password",password);  
+		  function saveStorage(){   
       
+	  var name = document.getElementById("username").value;
+	   sessionStorage.setItem("username",name);
+	  var password = document.getElementById("password").value; 
+	  var str=localStorage.getItem(name);
+	  var data=JSON.parse(str);
+	  
+	  if(!str)
+	  alert("用户不存在");
+	else if(password!=data.password ) alert("密码不正确！");
+	else 
+	 {	
+		 alert("登录成功！");
+		 window.open("index.html");
+		}
+	
+
+
     }
 		</script>
 
@@ -28,10 +41,10 @@
 	<div class="loginwarrp">
 		<div class="logo">游戏登陆</div>
         <div class="login_form">
-			<form id="Login" name="Login" method="post" onsubmit="saveStorage()" action="index.html">
+			<form id="Login" name="Login" method="post" onsubmit="saveStorage()" >
 				<li class="login-item">
 					<span>用户名：</span>
-					<input type="text" id="username" name="username" class="login_input" value="123" >
+					<input type="text" id="username" name="username" class="login_input"  >
                                         <span id="count-msg" class="error"></span>
 				</li>
 				<li class="login-item">

@@ -6,16 +6,22 @@
 <script src="code/chapter/canvas.js"></script>
 
 <link rel="stylesheet" href="css/game.css" />
+<style>
+  body{
+    background-image:url('img/bac.jpg');
+    background-position:center; 
+    background-repeat:no-repeat; 
+  }
+  </style>
 <script type="text/javascript">
 
 function getStorage(){
 var a=sessionStorage.getItem("username");
- document.getElementById("username").innerHTML=a;
 }
 </script>
 </head>
-<body onload="getStorage()">
-  <div id="div1">
+<body onload="getStorage()" >
+  <div id="div1" >
   <script>
     // To know when to stop and restart the animation, a level that is
   // being displayed may be in three states:
@@ -101,27 +107,155 @@ var a=sessionStorage.getItem("username");
   </div>
 
   <div class="rank" id="div2">
+    <p>我的积分:</p>
+    <span id=defeng>0</span>
   <table border="6">
 <caption>排行榜</caption>
 <tr>
-  <td>昵称</td>
+  <td>排名</td>
+  <td>用户</td>
   <td>积分</td>
 </tr>
 <tr>
+  <td>
+    第一名
+  </td>
+  <td>
+    <div id="username1">
+    </div>
+  </td>
+  <td>
+    <div id="result1" >
+      
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    第二名
+  </td>
   <td>
     <div id="username">
     </div>
   </td>
   <td>
     <div id="result" >
-      0
+      
     </div>
   </td>
 </tr>
-
 <tr>
-  <td>许翔</td>
-  <td>500</td>
+  <td>
+    第三名
+  </td>
+  <td>
+    <div id="username">
+    </div>
+  </td>
+  <td>
+    <div id="result" >
+      
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    第四名
+  </td>
+  <td>
+    <div id="username">
+    </div>
+  </td>
+  <td>
+    <div id="result" >
+      
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    第五名
+  </td>
+  <td>
+    <div id="username">
+    </div>
+  </td>
+  <td>
+    <div id="result" >
+      
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    第六名
+  </td>
+  <td>
+    <div id="username">
+    </div>
+  </td>
+  <td>
+    <div id="result" >
+      
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    第七名
+  </td>
+  <td>
+    <div id="username">
+    </div>
+  </td>
+  <td>
+    <div id="result" >
+      
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    第八名
+  </td>
+  <td>
+    <div id="username">
+    </div>
+  </td>
+  <td>
+    <div id="result" >
+      
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    第九名
+  </td>
+  <td>
+    <div id="username">
+    </div>
+  </td>
+  <td>
+    <div id="result" >
+      
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    第十名
+  </td>
+  <td>
+    <div id="username">
+    </div>
+  </td>
+  <td>
+    <div id="result" >
+      
+    </div>
+  </td>
+</tr>
 </tr>
 </table>
   </div>

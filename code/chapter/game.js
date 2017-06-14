@@ -283,13 +283,15 @@ Player.prototype.act = function(step, level, keys) {
 };
 
  var jifen=0;
+ var user=sessionStorage.getItem("username");
 Level.prototype.playerTouched = function(type, actor) {
   if (type == "lava" && this.status == null) {
     this.status = "lost";
     this.finishDelay = 1;
   } else if (type == "coin") {
      jifen++;
-     document.getElementById("result").innerHTML=jifen;
+     rank(user,jifen);
+     document.getElementById("defeng").innerHTML=jifen;
     this.actors = this.actors.filter(function(other) {
       return other != actor;
     })
@@ -355,17 +357,27 @@ function runGame(plans, Display) {
       runLevel(new Level(plans[n]), Display, function(status) {
         if (status == "lost") {
           if (lives > 0) {
+            
             startLevel(n, lives - 1);
+
+            alert("剩余生命"+lives)
           } else {
             console.log("Game over");
+            alert("Game over")
+            window.close();
             startLevel(0, 3);
           }     
         } else if (n < plans.length - 1) {
           startLevel(n + 1, lives);
         } else {
           console.log("You win!");
+          alert("You win!")
         }
       });
     }
     startLevel(0, 3);
+  }
+  function rank(username,jifen){
+document.getElementById("username1").innerHTML=username;   
+document.getElementById("result1").innerHTML=jifen;
   }

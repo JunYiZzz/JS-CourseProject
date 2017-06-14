@@ -22,12 +22,15 @@
 .won .player {
   box-shadow: -4px -7px 8px white, 4px -7px 8px white;
 }
-.rank{
 
+#div1{
+  margin-top: 20px;
+
+  float: left;
 }
-
 
 #div2{
   margin-top: 20px;
+
   float: left;
 }
