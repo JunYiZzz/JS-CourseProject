@@ -63,14 +63,18 @@ CanvasDisplay.prototype.updateViewport = function() {
 };
 
 CanvasDisplay.prototype.clearDisplay = function() {
+  var bac=new Image;
+  bac.src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1497239806445&di=03c24f6ecbb144c50f923310bdff8e34&imgtype=0&src=http%3A%2F%2Fwww.bz55.com%2Fuploads%2Fallimg%2F140916%2F138-140916152100-50.jpg"
   if (this.level.status == "won")
     this.cx.fillStyle = "rgb(68, 191, 255)";
   else if (this.level.status == "lost")
     this.cx.fillStyle = "rgb(44, 136, 214)";
   else
-    this.cx.fillStyle = "rgb(52, 166, 251)";
+    this.cx.fillStyle = "rgb(50, 166, 251)";
+    //this.canvas.drawImage="bac,0,0";
   this.cx.fillRect(0, 0,
                    this.canvas.width, this.canvas.height);
+                   this.canvas.drawImage
 };
 
 var otherSprites = document.createElement("img");

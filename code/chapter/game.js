@@ -10,6 +10,9 @@ var simpleLevelPlan = [
   "                      "
 ];
 
+
+
+
 function Level(plan) {
   this.width = plan[0].length;
   this.height = plan.length;
@@ -279,14 +282,18 @@ Player.prototype.act = function(step, level, keys) {
   }
 };
 
+ var jifen=0;
 Level.prototype.playerTouched = function(type, actor) {
   if (type == "lava" && this.status == null) {
     this.status = "lost";
     this.finishDelay = 1;
   } else if (type == "coin") {
+     jifen++;
+     document.getElementById("result").innerHTML=jifen;
     this.actors = this.actors.filter(function(other) {
       return other != actor;
-    });
+    })
+
     if (!this.actors.some(function(actor) {
       return actor.type == "coin";
     })) {

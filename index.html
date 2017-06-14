@@ -1,9 +1,21 @@
 <!doctype html>
-<script src="code/chapter/15_game.js"></script>
+<head>
+<meta charset="utf-8"> 
+<script src="code/chapter/game.js"></script>
 <script src="code/game_levels.js"></script>
-<script src="code/chapter/16_canvas.js"></script>
+<script src="code/chapter/canvas.js"></script>
 
+<link rel="stylesheet" href="css/game.css" />
+<script type="text/javascript">
+window.onload=function()
+		{
+var a=sessionStorage.getItem("aduser");
+document.getElementById("username").innerHTML(a);
+    }
+</script>
+</head>
 <body>
+  <div id="div1">
   <script>
     // To know when to stop and restart the animation, a level that is
   // being displayed may be in three states:
@@ -20,6 +32,8 @@
   //
   // The animation function, when state is "pausing", will set the state
   // to "no" and return false to stop the animation.
+
+
 
   function runLevel(level, Display, andThen) {
     var display = new Display(document.body, level);
@@ -81,5 +95,40 @@
     return pressed;
   }
     runGame(GAME_LEVELS, CanvasDisplay);
+
+    
   </script>
+  </div>
+
+  <div class="rank" id="div2">
+  <table border="6">
+<caption>排行榜</caption>
+<tr>
+  <td>昵称</td>
+  <td>积分</td>
+</tr>
+<tr>
+  <td>
+    <div id="username">
+    </div>
+  </td>
+  <td>
+    <div id="result" >
+      0
+    </div>
+  </td>
+</tr>
+
+<tr>
+  <td>许翔</td>
+  <td>500</td>
+</tr>
+</table>
+  </div>
+  <div id="div3">
+ <audio controls="controls" autoplay="autoplay">
+  <source src="bamusic.mp3" type="audio/mpeg">
+您的浏览器不支持 audio 元素。
+  </div>
+</audio>
 </body>
