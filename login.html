@@ -9,7 +9,8 @@
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/login.js"></script>
 
-        
+
+
 </head>
 <body>
 
@@ -31,10 +32,10 @@
 		 alert("登录成功！");
 		 window.open("index.html");
 		}
-	
-
-
-    }
+	}
+	function openpage(){
+window.open("regist.html");
+}
 		</script>
 
 <div class="page">
@@ -56,6 +57,7 @@
 				<li class="login-sub">
 					<input type="submit" name="Submit" value="登录" onload="saveStorage()"/>
                                         <input type="reset" name="Reset" value="重置" />
+										<input type="button" name="regist" value="注册" onclick="openpage()" />
 				</li>                      
            </form>
 		</div>

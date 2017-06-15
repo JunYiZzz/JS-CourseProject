@@ -290,8 +290,8 @@ Level.prototype.playerTouched = function(type, actor) {
     this.finishDelay = 1;
   } else if (type == "coin") {
      jifen++;
-     rank(user,jifen);
      document.getElementById("defeng").innerHTML=jifen;
+     rank(user,jifen);
     this.actors = this.actors.filter(function(other) {
       return other != actor;
     })
@@ -363,21 +363,109 @@ function runGame(plans, Display) {
             alert("剩余生命"+lives)
           } else {
             console.log("Game over");
-            alert("Game over")
-            window.close();
+            alert("Game over");
+            getranked();
+            jifen=0;
             startLevel(0, 3);
           }     
         } else if (n < plans.length - 1) {
           startLevel(n + 1, lives);
         } else {
           console.log("You win!");
-          alert("You win!")
+          alert("You win!");
+          
         }
       });
     }
     startLevel(0, 3);
   }
   function rank(username,jifen){
-document.getElementById("username1").innerHTML=username;   
-document.getElementById("result1").innerHTML=jifen;
+    var str=localStorage.getItem(username);
+	  var data=JSON.parse(str);
+    if(data.score<jifen)
+    {data.score=jifen;}
+    else {;}
+    var str1=JSON.stringify(data);
+    localStorage.setItem(data.user,str1);
   }
+  
+  function getranked(){
+    var arr1=new Array();
+    var storage = window.localStorage; 
+    for (var i=0, len = storage.length; i  <  len; i++){
+      var key1 = storage.key(i);       
+      var value1 = storage.getItem(key1);
+      arr1[i]=value1;
+    }
+    for(var i=0;i<arr1.length;i++){
+      for(var j = i + 1;j<arr1.length;j++){
+        if(arr[i]<arr[j]){
+            var tmp = a[j];
+            a[j] = a[i];
+            a[i] = tmp;
+        }
+    }
+  }
+  var str = new Array;
+  str=arr1.slice(0,9); 
+  var name1=str[0].name;
+  var jifen1=str[0].score;    
+  document.getElementById("username1").innerHTML=name1;
+  document.getElementById("result1").innerHTML=jifen1;
+
+  var name2=str[1].name;
+  var jifen2=str[1].score;    
+  document.getElementById("username2").innerHTML=name2;
+  document.getElementById("result2").innerHTML=jifen2;
+
+  var name3=str[2].name;
+  var jifen3=str[2].score;    
+  document.getElementById("username3").innerHTML=name3;
+  document.getElementById("result3").innerHTML=jifen3;
+
+  var name4=str[3].name;
+  var jifen4=str[3].score;    
+  document.getElementById("username4").innerHTML=name4;
+  document.getElementById("result4").innerHTML=jifen4;
+
+  var name5=str[4].name;
+  var jifen5=str[4].score;    
+  document.getElementById("username5").innerHTML=name5;
+  document.getElementById("result5").innerHTML=jifen5;
+
+  var name6=str[5].name;
+  var jifen6=str[5].score;    
+  document.getElementById("username6").innerHTML=name6;
+  document.getElementById("result6").innerHTML=jifen6;
+
+  var name7=str[6].name;
+  var jifen7=str[6].score;    
+  document.getElementById("username7").innerHTML=name7;
+  document.getElementById("result7").innerHTML=jifen7;
+
+  var name8=str[7].name;
+  var jifen8=str[7].score;    
+  document.getElementById("username8").innerHTML=name8;
+  document.getElementById("result8").innerHTML=jifen8;
+
+  var name9=str[8].name;
+  var jifen9=str[8].score;    
+  document.getElementById("username9").innerHTML=name9;
+  document.getElementById("result9").innerHTML=jifen9;
+
+  var name10=str[9].name;
+  var jifen10=str[9].score;    
+  document.getElementById("username10").innerHTML=name10;
+  document.getElementById("result10").innerHTML=jifen10;
+
+  
+
+    }
+  
+    
+			
+
+
+  
+
+

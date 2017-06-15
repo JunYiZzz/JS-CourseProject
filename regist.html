@@ -15,19 +15,14 @@
 
 	<script>
 
-		  function saveStorage(){  
-        var name = document.getElementById("username").value;  
-        sessionStorage.setItem("username",name);  
-        var password = document.getElementById("password").value;  
-        sessionStorage.setItem("password",password);  
-      
-    }
+		
 
     function savest()
 		{
 			var data=new Object;
 			data.user=document.getElementById('reg_username').value;
 			data.password=document.getElementById('reg_password').value;
+			data.score=0;
 			var str=JSON.stringify(data);
 			localStorage.setItem(data.user,str);
 			alert("注册成功");
