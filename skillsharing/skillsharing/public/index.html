@@ -1,0 +1,367 @@
+<!doctype html>
+<head>
+<meta charset="utf-8"> 
+<script src="code/chapter/game.js"></script>
+<script src="code/game_levels.js"></script>
+<script src="code/chapter/canvas.js"></script>
+
+<link rel="stylesheet" href="css/game.css" />
+<script>
+   var arr1=new Array();
+	function getranked(){ 
+    
+    for (var i=0, len = localStorage.length; i  <  len; i++){
+      var key1 = localStorage.key(i);       
+      var value1 = localStorage.getItem(key1);
+      var data=JSON.parse(value1);
+      arr1[i]=data;
+    }
+
+    for(var i=0;i<arr1.length;i++){
+      for(var j = i + 1;j<arr1.length;j++){
+        if(arr1[i].score<arr1[j].score){
+            var tmp = arr1[j];
+            arr1[j] = arr1[i];
+            arr1[i] = tmp;
+        }
+    }
+  }
+
+ 
+  var name1=arr1[0].user;
+  var jifen1=arr1[0].score;    
+  document.getElementById("username1").innerHTML=name1;
+  document.getElementById("result1").innerHTML=jifen1;
+
+  var name2=arr1[1].user;
+  var jifen2=arr1[1].score;    
+  document.getElementById("username2").innerHTML=name2;
+  document.getElementById("result2").innerHTML=jifen2;
+
+  var name3=arr1[2].user;
+  var jifen3=arr1[2].score;    
+  document.getElementById("username3").innerHTML=name3;
+  document.getElementById("result3").innerHTML=jifen3;
+
+  var name4=arr1[3].user;
+  var jifen4=arr1[3].score;    
+  document.getElementById("username4").innerHTML=name4;
+  document.getElementById("result4").innerHTML=jifen4;
+
+  var name5=arr1[4].user;
+  var jifen5=arr1[4].score;    
+  document.getElementById("username5").innerHTML=name5;
+  document.getElementById("result5").innerHTML=jifen5;
+
+  var name6=arr1[5].user;
+  var jifen6=arr1[5].score;    
+  document.getElementById("username6").innerHTML=name6;
+  document.getElementById("result6").innerHTML=jifen6;
+
+  var name7=arr1[6].user;
+  var jifen7=arr1[6].score;    
+  document.getElementById("username7").innerHTML=name7;
+  document.getElementById("result7").innerHTML=jifen7;
+
+  var name8=arr1[7].user;
+  var jifen8=arr1[7].score;    
+  document.getElementById("username8").innerHTML=name8;
+  document.getElementById("result8").innerHTML=jifen8;
+
+  var name9=arr1[8].user;
+  var jifen9=arr1[8].score;    
+  document.getElementById("username9").innerHTML=name9;
+  document.getElementById("result9").innerHTML=jifen9;
+
+  var name10=arr1[9].user;
+  var jifen10=arr1[9].score;    
+  document.getElementById("username10").innerHTML=name10;
+  document.getElementById("result10").innerHTML=jifen10;
+
+  
+
+    }
+</script> 
+<style type="text/css">
+  body{
+    background-image:url('img/bac.jpg');
+    background-position:center; 
+    background-repeat:no-repeat; 
+  }
+  table.imagetable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #999999;
+	border-collapse: collapse;
+}
+table.imagetable th {
+	background:#b5cfd2 url('cell-blue.jpg');
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #999999;
+}
+table.imagetable td {
+	background:#dcddc0 url('cell-grey.jpg');
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #999999;
+}
+  
+  </style>
+<script type="text/javascript">
+
+function getStorage(){
+var a=sessionStorage.getItem("username");
+}
+</script>
+</head>
+<body onload="getStorage(),getranked()" >
+  <div id="div1" >
+  <script>
+    // To know when to stop and restart the animation, a level that is
+  // being displayed may be in three states:
+  //
+  // * "yes":     Running normally.
+  // * "no":      Paused, animation isn't running
+  // * "pausing": Must pause, but animation is still running
+  //
+  // The key handler, when it notices escape being pressed, will do a
+  // different thing depending on the current state. When running is
+  // "yes" or "pausing", it will switch to the other of those two
+  // states. When it is "no", it will restart the animation and switch
+  // the state to "yes".
+  //
+  // The animation function, when state is "pausing", will set the state
+  // to "no" and return false to stop the animation.
+
+
+
+  function runLevel(level, Display, andThen) {
+    var display = new Display(document.body, level);
+    var running = "yes";
+    function handleKey(event) {
+      if (event.keyCode == 27) {
+        if (running == "no") {
+          running = "yes";
+          runAnimation(animation);
+        } else if (running == "pausing") {
+          running = "yes";
+        } else if (running == "yes") {
+          running = "pausing";
+        }
+      }
+    }
+    addEventListener("keydown", handleKey);
+    var arrows = trackKeys(arrowCodes);
+
+    function animation(step) {
+      if (running == "pausing") {
+        running = "no";
+        return false;
+      }
+
+      level.animate(step, arrows);
+      display.drawFrame(step);
+      if (level.isFinished()) {
+        display.clear();
+        // Here we remove all our event handlers
+        removeEventListener("keydown", handleKey);
+        arrows.unregister(); // (see change to trackKeys below)
+        if (andThen)
+          andThen(level.status);
+        return false;
+      }
+    }
+    runAnimation(animation);
+  }
+
+  function trackKeys(codes) {
+    var pressed = Object.create(null);
+    function handler(event) {
+      if (codes.hasOwnProperty(event.keyCode)) {
+        var state = event.type == "keydown";
+        pressed[codes[event.keyCode]] = state;
+        event.preventDefault();
+      }
+    }
+    addEventListener("keydown", handler);
+    addEventListener("keyup", handler);
+
+    // This is new -- it allows runLevel to clean up its handlers
+    pressed.unregister = function() {
+      removeEventListener("keydown", handler);
+      removeEventListener("keyup", handler);
+    };
+    // End of new code
+    return pressed;
+  }
+    runGame(GAME_LEVELS, CanvasDisplay);
+
+    
+  </script>
+  </div>
+
+  <div class="rank" id="div2">
+    <p>我的积分:</p>
+    <span id=defeng>0</span>
+  <table border="6" class="imagetable">
+<caption>排行榜</caption>
+<tr>
+  <th>排名</th>
+  <th>用户</th>
+  <th>积分</th>
+</tr>
+<tr>
+  <td>
+    第一名
+  </td>
+  <td>
+    <div id="username1">
+    </div>
+  </td>
+  <td>
+    <div id="result1" >
+      
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    第二名
+  </td>
+  <td>
+    <div id="username2">
+    </div>
+  </td>
+  <td>
+    <div id="result2" >
+      
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    第三名
+  </td>
+  <td>
+    <div id="username3">
+    </div>
+  </td>
+  <td>
+    <div id="result3" >
+      
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    第四名
+  </td>
+  <td>
+    <div id="username4">
+    </div>
+  </td>
+  <td>
+    <div id="result4" >
+      
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    第五名
+  </td>
+  <td>
+    <div id="username5">
+    </div>
+  </td>
+  <td>
+    <div id="result5" >
+      
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    第六名
+  </td>
+  <td>
+    <div id="username6">
+    </div>
+  </td>
+  <td>
+    <div id="result6" >
+      
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    第七名
+  </td>
+  <td>
+    <div id="username7">
+    </div>
+  </td>
+  <td>
+    <div id="result7" >
+      
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    第八名
+  </td>
+  <td>
+    <div id="username8">
+    </div>
+  </td>
+  <td>
+    <div id="result8" >
+      
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    第九名
+  </td>
+  <td>
+    <div id="username9">
+    </div>
+  </td>
+  <td>
+    <div id="result9" >
+      
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+    第十名
+  </td>
+  <td>
+    <div id="username10">
+    </div>
+  </td>
+  <td>
+    <div id="result10" >
+      
+    </div>
+  </td>
+</tr>
+</tr>
+</table>
+  </div>
+  <div id="div3">
+ <audio controls="controls" autoplay="autoplay">
+  <source src="bamusic.mp3" type="audio/mpeg">
+您的浏览器不支持 audio 元素。
+  </div>
+</audio>
+</body>

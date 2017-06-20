@@ -14,7 +14,7 @@
 </head>
 <body>
 
-	<script>
+	<!--<script>
 
 		  function saveStorage(){   
       
@@ -36,13 +36,13 @@
 	function openpage(){
 window.open("regist.html");
 }
-		</script>
+		</script>-->
 
 <div class="page">
 	<div class="loginwarrp">
 		<div class="logo">游戏登陆</div>
         <div class="login_form">
-			<form id="Login" name="Login" method="post" onsubmit="saveStorage()" >
+			<form id="Login" name="Login" method="post"  >
 				<li class="login-item">
 					<span>用户名：</span>
 					<input type="text" id="username" name="username" class="login_input"  >
@@ -55,9 +55,9 @@ window.open("regist.html");
 				</li>
 				<div class="clearfix"></div> 
 				<li class="login-sub">
-					<input type="submit" name="Submit" value="登录" onload="saveStorage()"/>
+					<input type="submit" id="logining"name="Submit" value="登录" />
                                         <input type="reset" name="Reset" value="重置" />
-										<input type="button" name="regist" value="注册" onclick="openpage()" />
+										<input type="button" name="regist" value="注册" onclick="openpage(regist.html)" />
 				</li>                      
            </form>
 		</div>
@@ -82,4 +82,29 @@ window.open("regist.html");
 	</script>
 	<script type="text/javascript" src="js/canvas-particle.js"></script>
 </body>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script>
+  $(function () {
+    $("#logining").click(function () {
+     
+      $.ajax({
+        url:"http://localhost:3000/login",
+        type:"POST",
+        data:{
+          username:$("#username").val(),
+          password:$("#password").val()
+        },
+         success:function (res) {
+           alert("登录成功!");
+					 window.open("index.html");
+		   location.href = "index.html";
+         },
+        error:function (err) {
+          console.log(err);
+        }
+      })
+ 
+    })
+  });
+</script>
 </html>
