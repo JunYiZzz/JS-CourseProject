@@ -122,21 +122,7 @@ var a=sessionStorage.getItem("username");
 <body onload="getStorage(),getranked()" >
   <div id="div1" >
   <script>
-    // To know when to stop and restart the animation, a level that is
-  // being displayed may be in three states:
-  //
-  // * "yes":     Running normally.
-  // * "no":      Paused, animation isn't running
-  // * "pausing": Must pause, but animation is still running
-  //
-  // The key handler, when it notices escape being pressed, will do a
-  // different thing depending on the current state. When running is
-  // "yes" or "pausing", it will switch to the other of those two
-  // states. When it is "no", it will restart the animation and switch
-  // the state to "yes".
-  //
-  // The animation function, when state is "pausing", will set the state
-  // to "no" and return false to stop the animation.
+   
 
 
 

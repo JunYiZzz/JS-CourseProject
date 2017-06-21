@@ -24,12 +24,14 @@ http.createServer(function (req , res) {
             console.log("读取文件成功");
             if (!data){
               if(pathName == "/login"){
+                console.log("在登录页1");
                 res.end("该用户不存在");
                 return;
               }
 //根据前端发来的路由地址判断是登录还是注册页面，如果是注册页面
-              if(pathName == "/regist"){
+              else if(pathName == "/register"){
 //创建一个数组一个对象来保存帐号和密码
+                console.log("在注册页");
                 var arr = [];
                 var obj = {};
 //把用户的帐号密码保存
@@ -41,56 +43,52 @@ http.createServer(function (req , res) {
                 res.end("注册成功!");
                 return;
               }
-            }else {
+            }
+            else {
               console.log("文件中有数据");
+            if(pathName == "/login"){
+              console.log("在登录页2");
 //把数据转成JSON对象，以便我们使用
-              var arr = JSON.parse(data);
-//遍历整个保存数据的数组 判断登录注册
-              for(var i = 0;i < arr.length;i++){
+            var arr = JSON.parse(data);
+          for(var i = 0;i < arr.length;i++){
                 var obj = arr[i];
                 if(obj.username == user.username){
-                  if(pathName == "/login"){
                     if (obj.password == user.password){
+              
                       res.end("登录成功!");
-                      return;
-                    }else {
+                      return ;
+                    }
+                    else {
                       res.end("密码错误！");
                       return;
                     }
                   }
-                  if(pathName == "/regist"){
-                    res.end("该用户已存在!");
-                    return;
+                  else{
+                    res.end("用户名不存在!");
+                return;
+                  }
                   }
                 }
-              
-              else {
-                if(pathName == "/login"){
-                res.end("用户名不存在!");
-                return;
-              }
-              if(pathName == "/regist"){
-//创建新对象写入数据
-                var obj = {};
+                else if(pathName == "/register")
+                {
+                  var arr = JSON.parse(data);
+                  var obj = {};
                 obj.username = user.username;
                 obj.password = user.password;
                 arr.push(obj);
                 fs.writeFileSync("db.txt" , JSON.stringify(arr) , "utf-8");
                 res.end("注册成功!");
                 return;
+                }
               }
-              }
-}
             }
-          }else {
+        else {
             console.log("读取文件失败");
           }
         })
       }
     });
   }else {
-    
-   //self.location='regist.htm'; 
     res.end("get请求");
   }
 }).listen(3000 , function (err) {
